@@ -1,0 +1,20 @@
+import streamlit as st
+from gtts import gTTS
+import speech_recognition as sr
+import json
+
+# 1. Family Profile Dashboard
+st.title("Family Profile Dashboard")
+st.sidebar.text_input("Add Family Member Name:")
+
+# 2. Voice Story Recorder + Save
+if st.button("Record Story"):
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        audio = r.listen(source)
+    story = r.recognize_google(audio)
+    tts = gTTS(text=story, lang='en')
+    tts.save("story.mp3")
+    st.success("Story saved as story.mp3")
+
+# Expected output: "Story saved as story.mp3"
